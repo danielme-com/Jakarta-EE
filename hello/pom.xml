@@ -17,6 +17,9 @@
     </properties>
 
     <build>
+
+        <finalName>hello</finalName>
+        
         <plugins>
 
             <plugin>
