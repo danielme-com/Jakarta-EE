@@ -1,0 +1,8 @@
+version: '3'
+services:
+  arquillian-cube-wildfly:
+    build:
+        context: src/test/resources/docker
+    ports:
+      - "8989:8080"
+      - "10090:9990"
