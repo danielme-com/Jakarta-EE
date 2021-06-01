@@ -52,8 +52,19 @@
     </extension>-->
 
     <extension qualifier="docker">
-        <property name="dockerContainersFiles">
+        <!-- use docker-compose.yml file -->
+        <!-- <property name="dockerContainersFiles">
             src/test/resources/docker/docker-compose.yml
+        </property> -->
+        <!-- use Arquillian CUBE format to set up the containers -->
+        <property name="definitionFormat">CUBE</property>
+        <property name="autoStartContainers">arquillian-cube-wildfly</property>
+        <property name="dockerContainers">
+        arquillian-cube-wildfly:
+            buildImage:
+                dockerfileLocation: src/test/resources/docker
+                noCache: false
+            portBindings: [8989->8080/tcp, 10090->9990/tcp, 8787/tcp]
         </property>
         <!-- Only for Windows -->
         <!--<property name="serverUri">tcp://localhost:2375</property>-->
