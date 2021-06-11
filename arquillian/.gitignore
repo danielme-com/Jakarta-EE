@@ -6,3 +6,4 @@
 *.iws
 target/
 .DS_Store
+*.ucls
