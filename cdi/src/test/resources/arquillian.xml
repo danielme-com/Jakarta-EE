@@ -1,0 +1,63 @@
+<arquillian
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://jboss.org/schema/arquillian"
+        xsi:schemaLocation="http://jboss.org/schema/arquillian
+    http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
+
+    <defaultProtocol type="Servlet 5.0"/>
+
+    <container qualifier="wildfly_managed">
+        <configuration>
+            <property name="jbossHome">/opt/CURSO/SERVERS/wildfly-preview-22.0.0.Final.test</property>
+            <property name="javaVmArguments">-Djboss.socket.binding.port-offset=100</property>
+            <property name="managementPort">10090</property>
+        </configuration>
+    </container>
+
+    <container qualifier="wildfly_remote">
+        <configuration>
+            <property name="managementPort">10090</property>
+            <property name="port">8989</property>
+            <property name="username">admin</property>
+            <property name="password">admin</property>
+        </configuration>
+    </container>
+
+    <container qualifier="wildfly_embedded">
+        <configuration>
+           <!-- <property name="jbossHome">C:\Users\dani\Desktop\wildfly-preview-22.0.0.Final</property>-->
+            <!--<property name="modulePath">C:\Users\dani\Desktop\wildfly-preview-22.0.0.Final/modules</property>-->
+            <property name="jbossHome">/opt/CURSO/SERVERS/wildfly-preview-22.0.0.Final.test</property>
+            <property name="modulePath">/opt/CURSO/SERVERS/wildfly-preview-22.0.0.Final.test/modules</property>
+        </configuration>
+    </container>
+
+    <container qualifier="wildfly_docker">
+        <configuration>
+            <property name="managementPort">10090</property>
+            <property name="username">admin</property>
+            <property name="password">admin</property>
+            <property name="port">8989</property>
+            <property name="connectionTimeout">20000</property>
+        </configuration>
+    </container>
+
+    <!--<extension qualifier="cube">
+        <property name="connectionMode">STARTORCONNECTANDLEAVE</property>
+    </extension>-->
+
+    <extension qualifier="docker">
+        <property name="definitionFormat">CUBE</property>
+        <property name="autoStartContainers">arquillian-cube-wildfly-cdi</property>
+        <property name="dockerContainers">
+            arquillian-cube-wildfly-cdi:
+                buildImage:
+                    dockerfileLocation: src/test/resources/docker
+                    noCache: false
+                portBindings: [8989->8080/tcp, 10090->9990/tcp, 8787/tcp]
+        </property>
+        <!-- Only for Windows -->
+        <!--<property name="serverUri">tcp://localhost:2375</property>-->
+    </extension>
+
+</arquillian>
