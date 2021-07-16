@@ -82,6 +82,14 @@ public final class Deployments {
                 .addAsLibraries(getAssertjFiles());
     }
 
+    public static WebArchive producersAlternatives() {
+        return ShrinkWrap.create(WebArchive.class, WAR_NAME)
+                .addPackage(ListsProducer.class.getPackage())
+                .addPackage(FileStorage.class.getPackage())
+                .addAsWebInfResource(new FileAsset(new File("src/test/resources/beans-producer-alternatives.xml")), "beans.xml")
+                .addAsLibraries(getAssertjFiles());
+    }
+
     public static WebArchive injectionPoint() {
         return ShrinkWrap.create(WebArchive.class, WAR_NAME)
                 .addPackage(PropertiesProducer.class.getPackage())
