@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ShapeDefaultInjectionArquillianTest {
 
     @Inject
-    Shape shape;
+    private Shape shape;
 
     @Deployment
     public static WebArchive createDeployment() {

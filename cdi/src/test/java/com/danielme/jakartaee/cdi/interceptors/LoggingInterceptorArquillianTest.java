@@ -18,15 +18,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class LoggingInterceptorArquillianTest {
 
     @Inject
-    TargetClass targetClass;
+    private TargetClass targetClass;
 
     @Inject
     @Named("logger")
-    List<String> logger;
+    private List<String> logger;
 
     @Inject
     @Named("constructors")
-    List<String> constructors;
+    private List<String> constructors;
 
     @Deployment
     public static WebArchive createDeployment() {

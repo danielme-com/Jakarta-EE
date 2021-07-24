@@ -17,11 +17,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class DecoratorArquillianTest {
 
     @Inject
-    MessageService messageService;
+    private MessageService messageService;
 
     @Inject
     @Named("logger")
-    List<String> logger;
+    private List<String> logger;
 
     @Deployment
     public static WebArchive createDeployment() {

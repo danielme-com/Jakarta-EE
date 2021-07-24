@@ -22,10 +22,10 @@ public class DocumentEventsArquillianTest {
 
     @Inject
     @Named("notifications")
-    List<String> notifications;
+    private List<String> notifications;
 
     @Inject
-    DocumentStorage documentStorage;
+    private DocumentStorage documentStorage;
 
     @Deployment
     public static WebArchive createDeployment() {

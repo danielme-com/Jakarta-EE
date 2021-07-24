@@ -23,15 +23,15 @@ public class FileStorageEventsArquillianTest {
 
     @Inject
     @Named("notifications")
-    List<String> notifications;
+    private List<String> notifications;
 
     @Inject
     @FileStorageLocalQualifier
-    FileStorage fileStorageLocal;
+    private FileStorage fileStorageLocal;
 
     @Inject
     @FileStorageRemoteQualifier
-    FileStorage fileStorageRemote;
+    private FileStorage fileStorageRemote;
 
     @Deployment
     public static WebArchive createDeployment() {
