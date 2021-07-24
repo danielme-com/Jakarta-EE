@@ -22,13 +22,13 @@ public class LoggingInterceptor {
     private List<String> constructors;
 
     @AroundConstruct
-    Object construct(InvocationContext context) throws Exception {
+    private Object construct(InvocationContext context) throws Exception {
         constructors.add(context.getConstructor().getDeclaringClass().getSimpleName());
         return context.proceed();
     }
 
     @AroundInvoke
-    Object log(InvocationContext context) throws Exception {
+    private Object log(InvocationContext context) throws Exception {
         logger.add(context.getMethod().getName());
         return context.proceed();
     }
