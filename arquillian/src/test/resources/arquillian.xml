@@ -67,6 +67,7 @@
             portBindings: [8989->8080/tcp, 10090->9990/tcp, 8787/tcp]
         </property>
         <!-- Only for Windows -->
+        <!-- Alternative: set the system var DOCKER_HOST. See the profile test-windows-docker-url in pom.xml-->
         <!--<property name="serverUri">tcp://localhost:2375</property>-->
     </extension>
 
