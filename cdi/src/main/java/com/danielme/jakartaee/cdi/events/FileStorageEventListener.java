@@ -13,7 +13,7 @@ public class FileStorageEventListener {
 
     @Inject
     @Named("notifications")
-    List<String> notifications;
+    private List<String> notifications;
 
     void observerLocal(@Observes @FileStorageLocalQualifier FileContent fileContent) {
         notifications.add(FileStorageLocalQualifier.class.getSimpleName() + fileContent.getName());

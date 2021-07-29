@@ -12,7 +12,7 @@ public class FileStorageLocal implements FileStorage {
 
     @Inject
     @FileStorageLocalQualifier
-    Event<FileContent> event;
+    private Event<FileContent> event;
 
     @Override
     public void add(FileContent fileContent) {

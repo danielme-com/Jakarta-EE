@@ -12,7 +12,7 @@ public class FileStorageRemote implements FileStorage {
 
     @Inject
     @FileStorageRemoteQualifier
-    Event<FileContent> event;
+    private Event<FileContent> event;
 
     @Override
     public void add(FileContent fileContent) {
