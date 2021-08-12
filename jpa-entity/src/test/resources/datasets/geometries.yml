@@ -1,0 +1,7 @@
+geometries:
+  - id: 1
+    shape: 1
+  - id: 2
+    shape: 2
+  - id: 3
+    shape: 3

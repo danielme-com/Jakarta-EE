@@ -1,0 +1,6 @@
+users:
+  - id: 1
+    notifications: 'S'
+  - id: 2
+    notifications: 'N'
+  - id: 3
