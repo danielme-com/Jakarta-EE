@@ -57,10 +57,7 @@ public class ArquillianDBUnitExtension extends DBUnitExtension {
     @Override
     public void afterAll(ExtensionContext extensionContext) throws Exception {
         if (isInside()) {
-            System.out.println("afterAll");
             super.afterAll(extensionContext);
-            //JpaArquillianTest.connection.close();
-            //JpaArquillianTest.connection = null;
         }
     }
 
