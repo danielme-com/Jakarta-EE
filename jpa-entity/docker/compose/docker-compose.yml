@@ -1,0 +1,28 @@
+version: "3"
+services:
+    personal_budget-mysql:
+        image: mysql:8.0.25
+        ports:
+            - 3307:3306   
+        environment:
+            - MYSQL_DATABASE=personal_budget
+            - MYSQL_USER=budget
+            - MYSQL_PASSWORD=budget
+            - MYSQL_ROOT_PASSWORD=root
+        volumes:
+            - personal_budget-data:/var/lib/mysql
+    personal_budget-wildfly:
+        build:
+            dockerfile: Dockerfile
+            context: .
+        depends_on:
+             - personal_budget-mysql
+        ports:
+             - 8080:8080
+             - 9990:9990
+             - 8787:8787
+        volumes:
+             - /opt/CURSO/DOCKER-JPA-pruebas/jpa-entity/target:/opt/jboss/wildfly/standalone/deployments
+volumes:
+   personal_budget-data:
+
