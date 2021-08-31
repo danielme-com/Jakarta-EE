@@ -11,6 +11,7 @@ import org.hibernate.annotations.NaturalIdCache;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Objects;
 
 
 @Entity
@@ -28,4 +29,16 @@ public class UserNaturalId {
     @Column(nullable = false)
     private Integer number;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserNaturalId that = (UserNaturalId) o;
+        return number.equals(that.number);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(number);
+    }
 }
