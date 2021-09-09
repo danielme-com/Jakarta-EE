@@ -18,6 +18,7 @@
         <junit.api.version>5.7.0</junit.api.version>
         <arquillian.version>1.7.0.Alpha10</arquillian.version>
         <arquillian.wildfly.version>3.0.1.Final</arquillian.wildfly.version>
+        <arquillian.transaction.version>1.0.5</arquillian.transaction.version>
         <shrinkwrap.resolver.version>3.1.4</shrinkwrap.resolver.version>
         <assertj.core.version>3.18.1</assertj.core.version>
         <arquillian.cube.version>1.18.2</arquillian.cube.version>
@@ -292,6 +293,14 @@
                 	<artifactId>poi-ooxml</artifactId>
                 </exclusion>
             </exclusions>
+
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.arquillian.extension</groupId>
+            <artifactId>arquillian-transaction-jta</artifactId>
+            <version>${arquillian.transaction.version}</version>
+            <scope>test</scope>
         </dependency>
 
     </dependencies>

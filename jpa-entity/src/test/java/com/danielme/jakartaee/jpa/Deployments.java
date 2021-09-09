@@ -3,6 +3,7 @@ package com.danielme.jakartaee.jpa;
 import com.danielme.jakartaee.jpa.converters.BooleanAttributeConverter;
 import com.danielme.jakartaee.jpa.converters.ShapeAttributeConverter;
 import com.danielme.jakartaee.jpa.entities.Expense;
+import com.danielme.jakartaee.jpa.entities.Language;
 import com.danielme.jakartaee.jpa.entities.UserNaturalId;
 import com.danielme.jakartaee.jpa.extensions.ArquillianDBUnitExtension;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -44,6 +45,7 @@ final class Deployments {
                 .addClass(BooleanAttributeConverter.class)
                 .addClass(ShapeAttributeConverter.class)
                 .addClass(ArquillianDBUnitExtension.class)
+                .addClass(Datasets.class)
                 .addAsWebInfResource(new File("src/test/resources/datasets/expenses.yml"), "classes/datasets/expenses.yml")
                 .addAsWebInfResource(new File("src/test/resources/datasets/users.yml"), "classes/datasets/users.yml")
                 .addAsWebInfResource(new File("src/test/resources/datasets/cities.yml"), "classes/datasets/cities.yml")
@@ -51,6 +53,27 @@ final class Deployments {
                 .addAsWebInfResource(new File("src/test/resources/dbunit.yml"), "classes/dbunit.yml")
                 .addAsResource(new FileAsset(new File("src/main/resources/META-INF/persistence.xml")),
                         "/META-INF/persistence.xml")
+                .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
+                .addAsLibraries(dbRiderLibs());
+    }
+
+    static WebArchive jpaLifecycle() {
+        File[] assertj = Maven.resolver()
+                .loadPomFromFile("pom.xml")
+                .resolve("org.assertj:assertj-core")
+                .withTransitivity()
+                .asFile();
+        return ShrinkWrap.create(WebArchive.class, ARTIFACT)
+                .addClass(Expense.class)
+                .addClass(Language.class)
+                .addClass(Datasets.class)
+                .addClass(ArquillianDBUnitExtension.class)
+                .addAsWebInfResource(new File("src/test/resources/datasets/expenses.yml"), "classes/datasets/expenses.yml")
+                .addAsWebInfResource(new File("src/test/resources/dbunit.yml"), "classes/dbunit.yml")
+                .addAsResource(new FileAsset(new File("src/main/resources/META-INF/persistence.xml")),
+                        "/META-INF/persistence.xml")
+                .addAsLibraries(assertj)
+                .addAsLibraries(dbRiderLibs())
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml").addAsLibraries(dbRiderLibs());
     }
 
