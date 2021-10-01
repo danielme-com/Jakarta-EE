@@ -1,0 +1,9 @@
+invoices:
+  - id: 1
+invoices_items:
+  - id: 1
+    invoice_id: 1
+  - id: 2
+    invoice_id: 1
+  - id: 3
+    invoice_id: 1

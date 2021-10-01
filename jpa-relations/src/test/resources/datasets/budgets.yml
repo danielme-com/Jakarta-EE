@@ -1,0 +1,11 @@
+budgets:
+  - id: 1
+    name: August
+    amount: 300
+    date_from: 2021-08-01
+    date_to: 2021-08-31
+budgets_categories:
+  - budget_id: 1
+    category_id: 1
+  - budget_id: 1
+    category_id: 2

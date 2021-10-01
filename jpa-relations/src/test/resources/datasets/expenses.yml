@@ -1,0 +1,11 @@
+expenses:
+  - id: 1
+    amount: 120.43
+    concept: "Lunch menu"
+    date : 2021-06-05
+    category_id: 1
+  - id: 2
+    amount: 4.20
+    concept: "vegetables"
+    date: 2021-07-20
+    category_id: 1

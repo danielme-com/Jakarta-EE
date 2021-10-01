@@ -1,0 +1,20 @@
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence
+             https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
+             version="3.0">
+
+    <persistence-unit name="persistenceUnit-personalBudget" transaction-type="JTA">
+        <jta-data-source>jdbc/personalBudgetDS</jta-data-source>
+        <properties>
+            <property name="hibernate.dialect"
+                      value="org.hibernate.dialect.MySQL8Dialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="false"/>
+            <property name="hibernate.generate_statistics" value="false"/>
+            <property name="hibernate.jpa.compliance.proxy" value="false"/>
+        </properties>
+    </persistence-unit>
+
+</persistence>
