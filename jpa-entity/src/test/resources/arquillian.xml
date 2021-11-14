@@ -47,15 +47,15 @@
         </configuration>
     </container>
 
-    <extension qualifier="cube">
+    <!--<extension qualifier="cube">
         <property name="connectionMode">STARTORCONNECTANDLEAVE</property>
-    </extension>
+    </extension>-->
 
     <extension qualifier="docker">
-        <property name="autoStartContainers">personal_budget-wildfly-cube</property>
+        <property name="autoStartContainers">jpa_entity-wildfly-cube</property>
         <property name="definitionFormat">CUBE</property>
         <property name="dockerContainers">
-            personal_budget-mysql-cube:
+            jpa_entity-mysql-cube:
                 image: mysql:8.0.25
                 env: [MYSQL_DATABASE=personal_budget, MYSQL_USER=budget, MYSQL_PASSWORD=budget, MYSQL_ROOT_PASSWORD=root]
                 await:
@@ -63,13 +63,13 @@
                     match: 'personal_budget'
                     timeout: 30
                 portBindings: [3308->3306/tcp]
-            personal_budget-wildfly-cube:
+            jpa_entity-wildfly-cube:
                 buildImage:
                     dockerfileLocation: src/test/resources/docker
                     noCache: false
                 portBindings: [8989->8080/tcp, 10999->9990/tcp, 8888->8787/tcp]
                 links:
-                    - personal_budget-mysql-cube
+                    - jpa_entity-mysql-cube
         </property>
         <!-- Only for Windows -->
         <!-- Alternative: set the system var DOCKER_HOST. See the profile test-windows-docker-url in pom.xml-->

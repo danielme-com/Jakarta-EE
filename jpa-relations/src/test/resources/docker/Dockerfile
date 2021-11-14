@@ -54,7 +54,7 @@ RUN   bash -c '$JBOSS_HOME/bin/standalone.sh &' \
       && $JBOSS_CLI --connect --command="module add --name=com.mysql --resources=/tmp/mysql-connector-java-${DRIVER_VERSION}.jar --dependencies=javax.api,javax.transaction.api" \
       && $JBOSS_CLI --connect --command="reload" \
       && $JBOSS_CLI --connect --command="/subsystem=datasources/jdbc-driver=mysql:add(driver-name=mysql,driver-module-name=com.mysql,driver-class-name=com.mysql.cj.jdbc.Driver)" \
-      && $JBOSS_CLI --connect --command="data-source add --jndi-name=java:/jdbc/personalBudgetDS --jta="false" --name=personal_budgetDS --connection-url=jdbc:mysql://personal_budget-mysql-cube:3306/personal_budget --driver-name=mysql --user-name=budget --password=budget  --initial-pool-size=1 --min-pool-size=1 --max-pool-size=5 --idle-timeout-minutes=5" \
+      && $JBOSS_CLI --connect --command="data-source add --jndi-name=java:/jdbc/personalBudgetDS --jta="false" --name=personal_budgetDS --connection-url=jdbc:mysql://jpa_relations-mysql-cube:3306/personal_budget --driver-name=mysql --user-name=budget --password=budget  --initial-pool-size=1 --min-pool-size=1 --max-pool-size=5 --idle-timeout-minutes=5" \
       && $JBOSS_CLI --connect --command=":shutdown" \
       && rm -rf $JBOSS_HOME/standalone/configuration/standalone_xml_history/ $JBOSS_HOME/standalone/log/* \
       && rm -f /tmp/*.jar
