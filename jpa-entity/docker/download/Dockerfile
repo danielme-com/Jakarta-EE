@@ -50,7 +50,7 @@ ENV JBOSS_CLI /opt/jboss/wildfly/bin/jboss-cli.sh
 
 RUN   bash -c '$JBOSS_HOME/bin/standalone.sh &' \
       && bash -c 'until `$JBOSS_CLI -c ":read-attribute(name=server-state)" 2> /dev/null | grep -q running`; do echo `$JBOSS_CLI -c ":read-attribute(name=server-state)" 2> /dev/null`; sleep 1; done' \
-      && curl --location --output /tmp/mysql-connector-java-${DRIVER_VERSION}.jar --url http://search.maven.org/remotecontent?filepath=mysql/mysql-connector-java/${DRIVER_VERSION}/mysql-connector-java-${DRIVER_VERSION}.jar \
+      && curl --location --output /tmp/mysql-connector-java-${DRIVER_VERSION}.jar --url https://search.maven.org/remotecontent?filepath=mysql/mysql-connector-java/${DRIVER_VERSION}/mysql-connector-java-${DRIVER_VERSION}.jar \
       && $JBOSS_CLI --connect --command="module add --name=com.mysql --resources=/tmp/mysql-connector-java-${DRIVER_VERSION}.jar --dependencies=javax.api,javax.transaction.api" \
       && $JBOSS_CLI --connect --command="reload" \
       && $JBOSS_CLI --connect --command="/subsystem=datasources/jdbc-driver=mysql:add(driver-name=mysql,driver-module-name=com.mysql,driver-class-name=com.mysql.cj.jdbc.Driver)" \
