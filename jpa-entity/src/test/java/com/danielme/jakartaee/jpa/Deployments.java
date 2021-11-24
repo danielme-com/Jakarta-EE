@@ -36,7 +36,9 @@ final class Deployments {
                 .addAsWebInfResource(new File("src/test/resources/dbunit.yml"), "classes/dbunit.yml")
                 .addAsResource(new FileAsset(new File("src/main/resources/META-INF/persistence.xml")),
                         "/META-INF/persistence.xml")
-                .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml").addAsLibraries(dbRiderLibs());
+                .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
+                .addAsLibraries(assertjLibs())
+                .addAsLibraries(dbRiderLibs());
     }
 
     static WebArchive jpa() {
@@ -54,15 +56,11 @@ final class Deployments {
                 .addAsResource(new FileAsset(new File("src/main/resources/META-INF/persistence.xml")),
                         "/META-INF/persistence.xml")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
+                .addAsLibraries(assertjLibs())
                 .addAsLibraries(dbRiderLibs());
     }
 
     static WebArchive jpaLifecycle() {
-        File[] assertj = Maven.resolver()
-                .loadPomFromFile("pom.xml")
-                .resolve("org.assertj:assertj-core")
-                .withTransitivity()
-                .asFile();
         return ShrinkWrap.create(WebArchive.class, ARTIFACT)
                 .addClass(Expense.class)
                 .addClass(Language.class)
@@ -72,9 +70,17 @@ final class Deployments {
                 .addAsWebInfResource(new File("src/test/resources/dbunit.yml"), "classes/dbunit.yml")
                 .addAsResource(new FileAsset(new File("src/main/resources/META-INF/persistence.xml")),
                         "/META-INF/persistence.xml")
-                .addAsLibraries(assertj)
+                .addAsLibraries(assertjLibs())
                 .addAsLibraries(dbRiderLibs())
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml").addAsLibraries(dbRiderLibs());
+    }
+
+    private static File[] assertjLibs() {
+        return Maven.resolver()
+                .loadPomFromFile("pom.xml")
+                .resolve("org.assertj:assertj-core")
+                .withTransitivity()
+                .asFile();
     }
 
     private static File[] dbRiderLibs() {

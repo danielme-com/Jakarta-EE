@@ -14,10 +14,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import javax.sql.DataSource;
-
 import java.sql.Connection;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(ArquillianExtension.class)
 @ExtendWith(ArquillianDBUnitExtension.class)
@@ -49,31 +48,41 @@ public class JpaArquillianTest {
     @DataSet(value = "/datasets/expenses.yml")
     void testFindExpense() {
         Expense expense = em.find(Expense.class, Datasets.EXPENSE_ID);
-        assertNotNull(expense);
+
+        assertThat(expense).isNotNull();
     }
 
     @Test
     @DataSet(value = "/datasets/users.yml")
     void testBooleanConverter() {
-        assertTrue(em.find(User.class, Datasets.USER_ID_1).getPreferences().getNotifications());
-        assertFalse(em.find(User.class, Datasets.USER_ID_2).getPreferences().getNotifications());
-        assertNull(em.find(User.class, Datasets.USER_ID_3).getPreferences());
+        assertThat(em.find(User.class, Datasets.USER_ID_1).getPreferences().getNotifications())
+                .isTrue();
+        assertThat(em.find(User.class, Datasets.USER_ID_2).getPreferences().getNotifications())
+                .isFalse();
+        assertThat(em.find(User.class, Datasets.USER_ID_3).getPreferences())
+                .isNull();
     }
 
     @Test
     @DataSet(value = "/datasets/geometries.yml")
     void testShapeConverter() {
-        assertEquals(Geometry.Shape.CIRCLE, em.find(Geometry.class, Datasets.SHAPE_CIRCLE_ID).getShape());
-        assertEquals(Geometry.Shape.RECTANGLE, em.find(Geometry.class, Datasets.SHAPE_RECTANGLE_ID).getShape());
-        assertEquals(Geometry.Shape.TRIANGLE, em.find(Geometry.class, Datasets.SHAPE_TRIANGLE_ID).getShape());
+        assertThat(em.find(Geometry.class, Datasets.SHAPE_CIRCLE_ID).getShape())
+                .isEqualTo(Geometry.Shape.CIRCLE);
+        assertThat(em.find(Geometry.class, Datasets.SHAPE_RECTANGLE_ID).getShape())
+                .isEqualTo(Geometry.Shape.RECTANGLE);
+        assertThat(em.find(Geometry.class, Datasets.SHAPE_TRIANGLE_ID).getShape())
+                .isEqualTo(Geometry.Shape.TRIANGLE);
     }
 
     @Test
     @DataSet(value = "/datasets/cities.yml")
     void testEmbeddableId() {
-        City city = em.find(City.class, new CityPK(Datasets.CITY_NAME, Datasets.CITY_CODE));
+        CityPK cityPK = new CityPK(Datasets.CITY_NAME, Datasets.CITY_CODE);
 
-        assertNotNull(city);
+        City city = em.find(City.class, cityPK);
+
+        assertThat(city).isNotNull();
+        assertThat(city.getCityPk()).isEqualTo(cityPK);
     }
 
 }

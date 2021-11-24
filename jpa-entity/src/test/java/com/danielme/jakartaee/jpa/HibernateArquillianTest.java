@@ -15,10 +15,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import javax.sql.DataSource;
-
 import java.sql.Connection;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(ArquillianExtension.class)
 @ExtendWith(ArquillianDBUnitExtension.class)
@@ -50,9 +49,11 @@ class HibernateArquillianTest {
     @DataSet(value = "/datasets/users_naturalid.yml")
     void testNaturalId() {
         UserNaturalId userId = em.find(UserNaturalId.class, 1L);
-        UserNaturalId userNaturalId = em.unwrap(Session.class).bySimpleNaturalId(UserNaturalId.class).load(234);
+        UserNaturalId userNaturalId = em.unwrap(Session.class)
+                .bySimpleNaturalId(UserNaturalId.class)
+                .load(234);
 
-        assertEquals(userId.getId(), userNaturalId.getId());
+        assertThat(userId.getId()).isEqualTo(userNaturalId.getId());
     }
 
 }
