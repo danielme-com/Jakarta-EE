@@ -7,3 +7,4 @@
 *.ucls
 target/
 .DS_Store
+.jpb/
