@@ -32,7 +32,7 @@ public class Expense {
     @Column(nullable = false)
     private LocalDate date;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     //@JoinColumn(name = "category_id")
     private Category category;
 
