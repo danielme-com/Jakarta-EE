@@ -12,6 +12,8 @@ public final class Datasets {
     public static final Long INVOICE_ID = 1L;
     public static final Long INVOICE_ID_ITEM_1 = 1L;
     public static final Long USER_ID = 1L;
+    public static final Long CONTACT_INFO_ID_1 = 1L;
+
     private Datasets() {
     }
 }

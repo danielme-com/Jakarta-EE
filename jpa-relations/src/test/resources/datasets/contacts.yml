@@ -1,0 +1,13 @@
+contact_info:
+  - id: 1
+    mainEmail: danielme_com@yahoo.com
+contact_additional_emails:
+  - contact_info: 1
+    email: email
+    enabled: 1
+  - contact_info: 1
+    email: email2
+    enabled: 1
+  - contact_info: 1
+    email: email3
+    enabled: 0

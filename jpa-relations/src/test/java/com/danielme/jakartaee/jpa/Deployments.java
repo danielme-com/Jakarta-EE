@@ -30,6 +30,7 @@ final class Deployments {
                 .addAsWebInfResource(new File("src/test/resources/datasets/coupons.yml"), "classes/datasets/coupons.yml")
                 .addAsWebInfResource(new File("src/test/resources/datasets/categories.yml"), "classes/datasets/categories.yml")
                 .addAsWebInfResource(new File("src/test/resources/datasets/budgets.yml"), "classes/datasets/budgets.yml")
+                .addAsWebInfResource(new File("src/test/resources/datasets/contacts.yml"), "classes/datasets/contacts.yml")
                 .addAsWebInfResource(new File("src/test/resources/dbunit.yml"), "classes/dbunit.yml")
                 .addAsResource(new FileAsset(new File("src/main/resources/META-INF/persistence.xml")),
                         "/META-INF/persistence.xml")

@@ -17,7 +17,7 @@ public class ContactInfo {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    private String email;
+    private String mainEmail;
 
     /*@ElementCollection
     @CollectionTable(name = "contact_additional_emails",
