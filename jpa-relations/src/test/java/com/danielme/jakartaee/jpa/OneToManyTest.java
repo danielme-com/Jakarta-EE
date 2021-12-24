@@ -2,6 +2,7 @@ package com.danielme.jakartaee.jpa;
 
 import com.danielme.jakartaee.jpa.entities.Category;
 import com.danielme.jakartaee.jpa.entities.Coupon;
+import com.danielme.jakartaee.jpa.entities.Expense;
 import com.danielme.jakartaee.jpa.entities.User;
 import com.github.database.rider.core.api.dataset.DataSet;
 import org.junit.jupiter.api.Test;
@@ -39,6 +40,20 @@ public class OneToManyTest extends BaseRelationsTest {
 
         em.remove(userInserted);
         em.flush();
+    }
+
+    @Test
+    void testFetchCategoryExpenses() {
+        List<Expense> expenses = em.createQuery("SELECT e From Expense e WHERE e.category.id = :id " +
+                "ORDER BY e.date DESC", Expense.class)
+                                   .setParameter("id", Datasets.CATEGORY_ID_FOOD)
+                                   .setFirstResult(0)
+                                   .setMaxResults(10)
+                                   .getResultList();
+
+        assertThat(expenses)
+                .extracting("id")
+                .containsExactly(Datasets.EXPENSE_ID_2, Datasets.EXPENSE_ID_1);
     }
 
 }
