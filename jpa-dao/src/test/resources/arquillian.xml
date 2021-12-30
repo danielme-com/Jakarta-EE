@@ -1,0 +1,79 @@
+<arquillian
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://jboss.org/schema/arquillian"
+        xsi:schemaLocation="http://jboss.org/schema/arquillian
+    https://jboss.org/schema/arquillian/arquillian_1_0.xsd">
+
+    <defaultProtocol type="Servlet 5.0"/>
+
+    <container qualifier="wildfly_managed">
+        <configuration>
+            <property name="jbossHome">/opt/CURSO/SERVERS/wildfly-preview-22.0.0-datasource</property>
+            <property name="javaVmArguments">-Djboss.socket.binding.port-offset=100</property>
+            <property name="managementPort">10090</property>
+        </configuration>
+    </container>
+
+    <container qualifier="wildfly_remote">
+        <configuration>
+            <!-- web -->
+            <property name="host">192.168.1.129</property>
+            <property name="port">8180</property>
+            <!-- administration -->
+            <property name="managementAddress">192.168.1.129</property>
+            <property name="managementPort">10090</property>
+            <property name="username">admin</property>
+            <property name="password">admin</property>
+
+            <!-- time out, default: 5000-->
+            <property name="connectionTimeout">10000</property>
+        </configuration>
+    </container>
+
+    <container qualifier="wildfly_embedded">
+        <configuration>
+            <property name="jbossHome">/opt/CURSO/SERVERS/wildfly-preview-22.0.0.Final.test</property>
+            <property name="modulePath">/opt/CURSO/SERVERS/wildfly-preview-22.0.0.Final.test/modules</property>
+        </configuration>
+    </container>
+
+    <container qualifier="docker-wildfly_mysql">
+        <configuration>
+            <property name="managementPort">10999</property>
+            <property name="username">admin</property>
+            <property name="password">admin</property>
+            <property name="port">8989</property>
+            <property name="connectionTimeout">20000</property>
+        </configuration>
+    </container>
+
+    <!--<extension qualifier="cube">
+        <property name="connectionMode">STARTORCONNECTANDLEAVE</property>
+    </extension>-->
+
+    <extension qualifier="docker">
+        <property name="autoStartContainers">jpa-dao-wildfly-cube</property>
+        <property name="definitionFormat">CUBE</property>
+        <property name="dockerContainers">
+            jpa-dao-mysql-cube:
+                image: mysql:8.0.25
+                env: [MYSQL_DATABASE=personal_budget, MYSQL_USER=budget, MYSQL_PASSWORD=budget, MYSQL_ROOT_PASSWORD=root]
+                await:
+                    strategy: log
+                    match: 'personal_budget'
+                    timeout: 30
+                portBindings: [3308->3306/tcp]
+            jpa-dao-wildfly-cube:
+                buildImage:
+                    dockerfileLocation: src/test/resources/docker
+                    noCache: false
+                portBindings: [8989->8080/tcp, 10999->9990/tcp, 8888->8787/tcp]
+                links:
+                    - jpa-dao-mysql-cube
+        </property>
+        <!-- Only for Windows -->
+        <!-- Alternative: set the system var DOCKER_HOST. See the profile test-windows-docker-url in pom.xml-->
+        <!--<property name="serverUri">tcp://localhost:2375</property>-->
+    </extension>
+
+</arquillian>

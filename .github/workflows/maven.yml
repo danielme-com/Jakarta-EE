@@ -36,3 +36,6 @@ jobs:
     - name: Compile jpa-relations
       run: mvn -B package --file pom.xml -DskipTests
       working-directory: jpa-relations
+    - name: Compile jpa-dao
+      run: mvn -B package --file pom.xml -DskipTests
+      working-directory: jpa-dao
