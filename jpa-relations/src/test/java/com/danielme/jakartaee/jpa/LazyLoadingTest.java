@@ -22,6 +22,7 @@ public class LazyLoadingTest extends BaseRelationsTest {
     @Test
     void testLazyOneToMany() {
         Invoice invoice = em.find(Invoice.class, Datasets.INVOICE_ID);
+
         PersistenceUnitUtil pUnitUtil = em.getEntityManagerFactory().getPersistenceUnitUtil();
         assertThat(pUnitUtil.isLoaded(invoice, "items")).isFalse();
         log.info("loading...");
@@ -32,14 +33,19 @@ public class LazyLoadingTest extends BaseRelationsTest {
     @Test
     void testLazyManyToOne() {
         InvoiceItem invoiceItem = em.find(InvoiceItem.class, Datasets.INVOICE_ID_ITEM_1);
+
         log.info("loading...");
-        assertThat(invoiceItem.getInvoice().getId()).isEqualTo(Datasets.INVOICE_ID);
+
+        //Hibernate.initialize(invoiceItem.getInvoice());
+        invoiceItem.getInvoice().getDateTime();
+
         assertThat(invoiceItem.getInvoice()).isInstanceOf(HibernateProxy.class);
     }
 
     @Test
     void testUnproxyHibernate() {
         InvoiceItem invoiceItem = em.find(InvoiceItem.class, Datasets.INVOICE_ID_ITEM_1);
+
         assertThat(invoiceItem.getInvoice()).isInstanceOf(HibernateProxy.class);
         Invoice invoiceUnproxied = (Invoice) Hibernate.unproxy(invoiceItem.getInvoice());
         assertThat(invoiceUnproxied).isNotInstanceOf(HibernateProxy.class);
