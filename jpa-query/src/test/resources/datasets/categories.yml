@@ -1,0 +1,9 @@
+categories:
+  - id: 1
+    name: Food
+  - id : 2
+    name: Fuel
+  - id: 3
+    name: Entertainment
+  - id: 4
+    name: Pet

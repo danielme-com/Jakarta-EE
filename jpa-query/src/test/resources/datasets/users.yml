@@ -1,0 +1,7 @@
+users:
+  - id: 1
+    name: Daniel
+preferences:
+  - user_id: 1
+    enableNotifications: 1
+    enableSharing: 0

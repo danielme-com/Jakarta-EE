@@ -1,0 +1,31 @@
+expenses:
+  - id: 1
+    amount: 120.43
+    concept: "Lunch menu"
+    date : 2021-06-05
+    category_id: 1
+  - id: 2
+    amount: 4.20
+    concept: "vegetables"
+    date: 2021-07-20
+    category_id: 1
+  - id: 3
+    amount: 100.01
+    concept: "movies"
+    date: 2021-08-01
+    category_id: 3
+  - id: 4
+    amount: 12
+    concept: "Netflix"
+    date: 2021-08-01
+    category_id: 3
+  - id: 5
+    amount: 4.5
+    concept: "HBO"
+    date: 2021-10-10
+    category_id: 3
+  - id: 6
+    amount: 58.83
+    concept: "Full tank"
+    date: 2021-10-14
+    category_id: 2

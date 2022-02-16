@@ -1,0 +1,9 @@
+coupons:
+  - id: 1
+    name: Acme stores
+    amount: 5
+    expiration: 2021-10-10
+  - id: 2
+    name: supermarket
+    amount: 10
+    expense_id: 1

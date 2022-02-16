@@ -1,0 +1,10 @@
+.classpath
+.project
+.settings/
+.idea/
+*.iml
+*.iws
+*.ucls
+target/
+.DS_Store
+/.apt_generated_tests/

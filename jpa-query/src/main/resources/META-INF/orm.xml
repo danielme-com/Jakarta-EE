@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings version="3.0" xmlns="https://jakarta.ee/xml/ns/persistence/orm"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence/orm
+        https://jakarta.ee/xml/ns/persistence/orm/orm_3_0.xsd">
+
+    <named-query name="Category.findAll">
+        <query>SELECT c FROM Category c ORDER BY c.name</query>
+        <hint name="org.hibernate.readOnly" value="true"/>
+    </named-query>
+
+    <sql-result-set-mapping name="CouponWithCategory">
+        <entity-result entity-class="com.danielme.jakartaee.jpa.entities.Coupon"/>
+        <entity-result entity-class="com.danielme.jakartaee.jpa.entities.Expense">
+            <field-result name="id" column="exp_id"/>
+            <field-result name="amount" column="exp_amount"/>
+            <field-result name="category" column="category_id"/>
+            <field-result name="comments" column="comments"/>
+            <field-result name="concept" column="concept"/>
+            <field-result name="date" column="date"/>
+        </entity-result>
+    </sql-result-set-mapping>
+
+    <sql-result-set-mapping name="ExpenseSummaryMapping">
+        <constructor-result target-class="com.danielme.jakartaee.jpa.dto.ExpenseSummaryDTO">
+            <column name="concept"/>
+            <column name="amount"/>
+            <column name="date" class="java.time.LocalDate"/>
+        </constructor-result>
+    </sql-result-set-mapping>
+
+    <named-native-query name="Expense.findByText"
+                        result-class="com.danielme.jakartaee.jpa.entities.Expense">
+        <query>SELECT * FROM expenses WHERE UPPER(concept) like UPPER(:text) ORDER BY concept</query>
+    </named-native-query>
+
+    <named-stored-procedure-query name="ExpenseSpCountExpenses" procedure-name="sp_count_expenses">
+        <parameter name="concept" class="java.lang.String" mode="IN"/>
+        <parameter name="total" class="java.lang.Long" mode="OUT"/>
+    </named-stored-procedure-query>
+
+</entity-mappings>

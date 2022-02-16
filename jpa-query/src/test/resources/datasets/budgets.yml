@@ -1,0 +1,29 @@
+budgets:
+  - id: 1
+    name: August
+    amount: 300
+    date_from: 2021-08-01
+    date_to: 2021-08-31
+  - id: 2
+    name: July
+    amount: 30
+    date_from: 2021-07-01
+    date_to: 2021-07-31
+  - id: 3
+    name: June
+    amount: 42
+    date_from: 2021-06-01
+    date_to: 2021-07-30
+  - id: 4
+    name: Videogames
+    amount: 200
+    date_from: 2021-01-01
+budgets_categories:
+  - budget_id: 1
+    category_id: 1
+  - budget_id: 1
+    category_id: 2
+  - budget_id: 2
+    category_id: 2
+  - budget_id: 4
+    category_id: 3
