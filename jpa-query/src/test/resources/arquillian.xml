@@ -47,9 +47,9 @@
         </configuration>
     </container>
 
-    <extension qualifier="cube">
+    <!--<extension qualifier="cube">
         <property name="connectionMode">STARTORCONNECTANDLEAVE</property>
-    </extension>
+    </extension>-->
 
     <extension qualifier="docker">
         <property name="autoStartContainers">jpa_query-wildfly-cube</property>
