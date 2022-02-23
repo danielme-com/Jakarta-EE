@@ -104,7 +104,9 @@ public class CategoryJpqlDAOImpl extends GenericDAOImpl<Category, Long> implemen
     public Category findByIdWithRelations(Long id) {
         return em.createQuery("SELECT c FROM Category c " +
                 "JOIN FETCH c.budgets JOIN FETCH c.expenses WHERE c.id=:id", Category.class)
-                .setParameter("id", id).getResultList().get(0);
+                .setParameter("id", id)
+                .getResultList()
+                .get(0);
     }
 
     private CategorySummaryDTO map(Object[] columns) {

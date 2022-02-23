@@ -21,12 +21,12 @@ public class ExpenseJpqlDAOImpl extends GenericDAOImpl<Expense, Long> implements
 
     @Override
     public List<Expense> findAll() {
-        return em.createQuery("" +
-                        "SELECT expenseRoot " +
-                        "FROM Expense expenseRoot " +
+        return em.createQuery(
+                "SELECT e " +
+                        "FROM Expense e " +
                         "ORDER BY " +
-                        "       expenseRoot.date DESC, " +
-                        "       expenseRoot.concept",
+                        "       e.date DESC, " +
+                        "       e.concept",
                 Expense.class)
                 .getResultList();
     }
