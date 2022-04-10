@@ -5,7 +5,7 @@ import com.danielme.jakartaee.jpa.ExpenseSummaryAssert;
 import com.danielme.jakartaee.jpa.dto.CategorySummaryDTO;
 import com.danielme.jakartaee.jpa.entities.Category;
 import com.danielme.jakartaee.jpa.extensions.ArquillianDBUnitExtension;
-import com.danielme.jakartaee.jpa.hibernate.CustomFunctionsMetadataBuilderContributor;
+import com.danielme.jakartaee.jpa.hibernate.CustomFunctionsMySQLMetadataBuilderContributor;
 import com.github.database.rider.core.api.connection.ConnectionHolder;
 import com.github.database.rider.core.api.dataset.DataSet;
 import jakarta.annotation.Resource;
@@ -57,7 +57,7 @@ public class BaseDaoTest {
                          .addPackages(true, CategorySummaryDTO.class.getPackage())
                          .addPackages(true, Category.class.getPackage())
                          .addClass(ArquillianDBUnitExtension.class)
-                         .addClass(CustomFunctionsMetadataBuilderContributor.class)
+                         .addClass(CustomFunctionsMySQLMetadataBuilderContributor.class)
                          .addClass(ExpenseSummaryAssert.class)
                          .addClass(BaseDaoTest.class)
                          .addClass(Datasets.class)

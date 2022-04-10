@@ -16,7 +16,7 @@
             <property name="hibernate.jpa.compliance.proxy" value="false"/>
 
             <property name="hibernate.metadata_builder_contributor"
-                      value="com.danielme.jakartaee.jpa.hibernate.CustomFunctionsMetadataBuilderContributor"/>
+                      value="com.danielme.jakartaee.jpa.hibernate.CustomFunctionsMySQLMetadataBuilderContributor"/>
         </properties>
     </persistence-unit>
 
