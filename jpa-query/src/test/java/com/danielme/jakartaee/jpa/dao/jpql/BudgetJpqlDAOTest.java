@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class BudgetJpqlDAOTest extends BaseDaoTest {
+class BudgetJpqlDAOTest extends BaseDaoTest {
 
     @Inject
     BudgetJpqlDAO budgetJpqlDAO;

@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CouponJpqlDAOTest extends BaseDaoTest {
+class CouponJpqlDAOTest extends BaseDaoTest {
 
     @Inject
     CouponJpqlDAO couponJpqlDAO;

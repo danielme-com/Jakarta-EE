@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-public class CategoryJpqlDAOTest extends BaseDaoTest {
+class CategoryJpqlDAOTest extends BaseDaoTest {
 
     @Inject
     CategoryJpqlDAO categoryJpqlDAO;

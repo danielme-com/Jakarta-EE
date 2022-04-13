@@ -2,8 +2,6 @@ package com.danielme.jakartaee.jpa.dao.criteria;
 
 import com.danielme.jakartaee.jpa.Datasets;
 import com.danielme.jakartaee.jpa.dao.BaseDaoTest;
-import com.danielme.jakartaee.jpa.dao.Page;
-import com.danielme.jakartaee.jpa.dao.jpql.BudgetJpqlDAO;
 import com.danielme.jakartaee.jpa.entities.Budget;
 import com.danielme.jakartaee.jpa.entities.Budget_;
 import jakarta.inject.Inject;
@@ -15,7 +13,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class BudgetCriteriaDAOTest extends BaseDaoTest {
+class BudgetCriteriaDAOTest extends BaseDaoTest {
 
     @Inject
     BudgetCriteriaDAO budgetCriteriaDAO;

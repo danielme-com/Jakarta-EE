@@ -17,7 +17,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ExpenseCriteriaDAOTest extends BaseDaoTest {
+class ExpenseCriteriaDAOTest extends BaseDaoTest {
 
     @Inject
     ExpenseCriteriaDao expenseCriteriaDAO;

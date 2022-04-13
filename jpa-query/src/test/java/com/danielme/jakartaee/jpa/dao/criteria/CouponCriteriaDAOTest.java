@@ -2,7 +2,6 @@ package com.danielme.jakartaee.jpa.dao.criteria;
 
 import com.danielme.jakartaee.jpa.Datasets;
 import com.danielme.jakartaee.jpa.dao.BaseDaoTest;
-import com.danielme.jakartaee.jpa.dao.criteria.CouponCriteriaDAO;
 import com.danielme.jakartaee.jpa.dto.CouponSummaryDTO;
 import com.danielme.jakartaee.jpa.entities.Coupon;
 import com.danielme.jakartaee.jpa.entities.Coupon_;
@@ -13,7 +12,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CouponCriteriaDAOTest extends BaseDaoTest {
+class CouponCriteriaDAOTest extends BaseDaoTest {
 
     @Inject
     CouponCriteriaDAO couponCriteriaDAO;

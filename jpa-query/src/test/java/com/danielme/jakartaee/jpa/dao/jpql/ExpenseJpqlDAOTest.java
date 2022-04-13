@@ -3,7 +3,6 @@ package com.danielme.jakartaee.jpa.dao.jpql;
 import com.danielme.jakartaee.jpa.Datasets;
 import com.danielme.jakartaee.jpa.dao.BaseDaoTest;
 import com.danielme.jakartaee.jpa.dao.Page;
-import com.danielme.jakartaee.jpa.dao.jpql.ExpenseJpqlDAO;
 import com.danielme.jakartaee.jpa.entities.Expense;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
@@ -15,7 +14,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ExpenseJpqlDAOTest extends BaseDaoTest {
+class ExpenseJpqlDAOTest extends BaseDaoTest {
 
     @Inject
     ExpenseJpqlDAO expenseJpqlDAO;
