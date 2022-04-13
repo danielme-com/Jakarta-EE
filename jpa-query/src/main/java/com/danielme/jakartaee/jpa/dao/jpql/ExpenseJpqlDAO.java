@@ -31,5 +31,8 @@ public interface ExpenseJpqlDAO extends GenericDAO<Expense, Long> {
 
     void cloneForToday(Long id);
 
-    List<Expense> findByYear(int year);
+    Page<Expense> findByYear(int year, int first, int max);
+
+    Optional<Integer> weekOfYearExpense(Long expenseId);
+
 }

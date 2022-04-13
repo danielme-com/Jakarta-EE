@@ -108,13 +108,26 @@ public class ExpenseJpqlDAOImpl extends GenericDAOImpl<Expense, Long> implements
                 .getResultList();
     }
 
-
     @Override
-    public List<Expense> findByYear(int year) {
-        return em.createQuery("SELECT e FROM Expense e WHERE EXTRACT(YEAR FROM e.date) = :year ORDER BY e.date",
+    public Page<Expense> findByYear(int year, int first, int max) {
+        Long count = em.createQuery("SELECT count(e) FROM Expense e WHERE EXTRACT(YEAR FROM e.date) = :year", Long.class)
+                .setParameter("year", year)
+                .getSingleResult();
+        List<Expense> expenses = em.createQuery("SELECT e FROM Expense e WHERE EXTRACT(YEAR FROM e.date) = :year ORDER BY e.date",
                 Expense.class)
                 .setParameter("year", year)
+                .setFirstResult(first)
+                .setMaxResults(max)
                 .getResultList();
+        return new Page<>(expenses, count, first, max);
+    }
+
+    @Override
+    public Optional<Integer> weekOfYearExpense(Long expenseId) {
+        return em.createQuery("SELECT WEEK(e.date) FROM Expense e WHERE e.id = :expenseId", Integer.class)
+                .setParameter("expenseId", expenseId)
+                .getResultStream()
+                .findFirst();
     }
 
     @Override
@@ -137,7 +150,6 @@ public class ExpenseJpqlDAOImpl extends GenericDAOImpl<Expense, Long> implements
                 .setParameter("id", id)
                 .executeUpdate();
     }
-
 
 
 }

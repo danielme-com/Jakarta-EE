@@ -141,17 +141,29 @@ public class ExpenseJpqlDAOTest extends BaseDaoTest {
     void testCloneExpenseForToday() {
         expenseJpqlDAO.cloneForToday(Datasets.EXPENSE_ID_1);
 
-        BigDecimal amount = expenseJpqlDAO.findById(Datasets.EXPENSE_ID_1).get().getAmount();
+        Optional<Expense> expense = expenseJpqlDAO.findById(Datasets.EXPENSE_ID_1);
+
+        assertThat(expense).isNotEmpty();
         assertThat(expenseJpqlDAO.sumToday())
-                .isEqualTo(amount);
+                .isEqualTo(expense.get().getAmount());
     }
 
     @Test
     void testFindByYear() {
-        List<Expense> expenses = expenseJpqlDAO.findByYear(2021);
+        Page<Expense> expenses = expenseJpqlDAO.findByYear(2021, 0, Integer.MAX_VALUE);
 
-        assertThat(expenses)
-                .hasSize(Datasets.TOTAL_EXPENSES.intValue());
+        assertThat(expenses.getTotal())
+                .isEqualTo(Datasets.TOTAL_EXPENSES);
+    }
+
+    @Test
+    void testWeekOfYearExpense() {
+        Optional<Integer> week = expenseJpqlDAO.weekOfYearExpense(Datasets.EXPENSE_ID_1);
+
+        assertThat(week)
+                .isNotEmpty();
+        assertThat(week.get())
+                .isEqualTo(22);
     }
 
 }
