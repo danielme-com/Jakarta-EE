@@ -1,7 +1,7 @@
 package com.danielme.jakartaee.jpa.dao.jpql;
 
-import com.danielme.jakartaee.jpa.dao.Page;
 import com.danielme.jakartaee.jpa.dao.GenericDAOImpl;
+import com.danielme.jakartaee.jpa.dao.Page;
 import com.danielme.jakartaee.jpa.entities.Expense;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.NoResultException;

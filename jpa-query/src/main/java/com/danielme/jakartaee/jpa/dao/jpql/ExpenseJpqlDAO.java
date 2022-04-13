@@ -1,7 +1,7 @@
 package com.danielme.jakartaee.jpa.dao.jpql;
 
-import com.danielme.jakartaee.jpa.dao.Page;
 import com.danielme.jakartaee.jpa.dao.GenericDAO;
+import com.danielme.jakartaee.jpa.dao.Page;
 import com.danielme.jakartaee.jpa.entities.Expense;
 
 import java.math.BigDecimal;

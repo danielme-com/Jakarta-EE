@@ -2,7 +2,10 @@ package com.danielme.jakartaee.jpa.dao.criteria;
 
 import com.danielme.jakartaee.jpa.dao.GenericDAOImpl;
 import com.danielme.jakartaee.jpa.dto.CouponSummaryDTO;
-import com.danielme.jakartaee.jpa.entities.*;
+import com.danielme.jakartaee.jpa.entities.Coupon;
+import com.danielme.jakartaee.jpa.entities.Coupon_;
+import com.danielme.jakartaee.jpa.entities.Expense;
+import com.danielme.jakartaee.jpa.entities.Expense_;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.criteria.*;
 
