@@ -44,6 +44,11 @@ public abstract class GenericDAOImpl<T, K> implements GenericDAO<T, K> {
     }
 
     @Override
+    public void refresh(T entity) {
+        em.refresh(entity);
+    }
+
+    @Override
     public Long count() {
         /*return em.createQuery("SELECT COUNT(entity) FROM " + entityClass.getSimpleName() + "  entity",
                         Long.class)

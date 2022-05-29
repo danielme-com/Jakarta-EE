@@ -15,4 +15,6 @@ public interface GenericDAO<T, K> {
     void delete(T entity);
 
     Long count();
+
+    void refresh(T entity);
 }
