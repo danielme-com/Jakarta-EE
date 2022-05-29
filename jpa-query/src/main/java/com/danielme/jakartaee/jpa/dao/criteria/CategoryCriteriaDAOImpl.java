@@ -39,14 +39,16 @@ public class CategoryCriteriaDAOImpl extends GenericDAOImpl<Category, Long> impl
         CriteriaQuery<Category> cq = cb.createQuery(Category.class);
         Root<Category> categoryRoot = cq.from(Category.class);
 
-        Subquery<Budget> sqSub = cq.subquery(Budget.class);
+        Subquery<Integer> sqSub = cq.subquery(Integer.class);
         Root<Budget> sqRoot = sqSub.from(Budget.class);
         ListJoin<Budget, Category> join = sqRoot.join(Budget_.categories);
 
-        sqSub.select(sqRoot)
+        sqSub.select(cb.literal(1))
              .where(
-                     cb.equal(join.get(Category_.ID), categoryRoot.get(Category_.ID)),
-                     cb.ge(sqRoot.get(Budget_.amount), cb.parameter(BigDecimal.class, "minAmount"))
+                     cb.equal(join.get(Category_.ID),
+                             categoryRoot.get(Category_.ID)),
+                     cb.ge(sqRoot.get(Budget_.amount),
+                             cb.parameter(BigDecimal.class, "minAmount"))
              );
 
         cq.select(categoryRoot)
