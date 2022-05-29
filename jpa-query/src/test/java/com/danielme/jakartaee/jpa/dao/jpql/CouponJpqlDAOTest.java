@@ -50,6 +50,19 @@ class CouponJpqlDAOTest extends BaseDaoTest {
     }
 
     @Test
+    void testBulkUpdateBudgetRefresh() {
+        Coupon coupon = couponJpqlDAO.findById(Datasets.COUPON_ID_SUPER).get();
+        assertThat(coupon.getName())
+                .doesNotStartWith(Coupon.USED_PREFIX);
+
+        couponJpqlDAO.updateUsedPrefixBulk();
+        couponJpqlDAO.refresh(coupon);
+
+        assertThat(coupon.getName())
+                .startsWith(Coupon.USED_PREFIX);
+    }
+
+    @Test
     void testBulkDeleteExpired() {
         int deleted = couponJpqlDAO.deleteExpired();
 
