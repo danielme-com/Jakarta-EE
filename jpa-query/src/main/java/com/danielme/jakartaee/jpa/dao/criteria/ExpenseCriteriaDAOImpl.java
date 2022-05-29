@@ -160,7 +160,7 @@ public class ExpenseCriteriaDAOImpl extends GenericDAOImpl<Expense, Long> implem
             conjunction.getExpressions().add(cb.lessThanOrEqualTo(expenseRoot.get(Expense_.date),
                     cb.parameter(LocalDate.class, "dateTo")));
         }
-        if (conjunction.getExpressions().size() > 0) {
+        if (!conjunction.getExpressions().isEmpty()) {
             cq.where(conjunction);
         }
         cq.orderBy(cb.desc(expenseRoot.get(Expense_.date)), cb.asc(expenseRoot.get(Expense_.amount)));
