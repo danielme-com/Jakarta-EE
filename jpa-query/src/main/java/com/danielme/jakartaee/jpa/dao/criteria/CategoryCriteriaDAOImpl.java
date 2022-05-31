@@ -77,11 +77,10 @@ public class CategoryCriteriaDAOImpl extends GenericDAOImpl<Category, Long> impl
           .groupBy(categoryNamePath)
           .having(cb.greaterThanOrEqualTo(
                   cb.avg(expenseRoot.get(Expense_.amount)).as(BigDecimal.class),
-                  cb.parameter(BigDecimal.class, "maxAverage")))
+                  maxAverage))
           .orderBy(cb.asc(categoryNamePath));
 
         return em.createQuery(cq)
-                 .setParameter("maxAverage", maxAverage)
                  .getResultList();
     }
 
