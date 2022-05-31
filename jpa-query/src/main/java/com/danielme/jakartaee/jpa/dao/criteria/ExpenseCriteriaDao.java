@@ -1,6 +1,7 @@
 package com.danielme.jakartaee.jpa.dao.criteria;
 
 import com.danielme.jakartaee.jpa.dao.GenericDAO;
+import com.danielme.jakartaee.jpa.dao.Page;
 import com.danielme.jakartaee.jpa.dto.ExpenseDTO;
 import com.danielme.jakartaee.jpa.dto.ExpenseSummaryDTO;
 import com.danielme.jakartaee.jpa.dto.ExpenseWeekDTO;
@@ -12,7 +13,7 @@ import java.util.List;
 
 public interface ExpenseCriteriaDao extends GenericDAO<Expense, Long> {
 
-    List<Expense> findAll();
+    Page<Expense> findAll(int first, int max);
 
     List<String> getConcepts();
 

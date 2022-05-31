@@ -24,7 +24,7 @@ class ExpenseCriteriaDAOTest extends BaseDaoTest {
 
     @Test
     void testFindAll() {
-        List<Expense> expenses = expenseCriteriaDAO.findAll();
+        List<Expense> expenses = expenseCriteriaDAO.findAll(0, 6).getResults();
 
         assertThat(expenses)
                 .extracting(Expense_.ID)

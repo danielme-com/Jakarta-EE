@@ -1,6 +1,7 @@
 package com.danielme.jakartaee.jpa.dao.criteria;
 
 import com.danielme.jakartaee.jpa.dao.GenericDAOImpl;
+import com.danielme.jakartaee.jpa.dao.Page;
 import com.danielme.jakartaee.jpa.dto.ExpenseDTO;
 import com.danielme.jakartaee.jpa.dto.ExpenseSummaryDTO;
 import com.danielme.jakartaee.jpa.dto.ExpenseWeekDTO;
@@ -26,18 +27,22 @@ public class ExpenseCriteriaDAOImpl extends GenericDAOImpl<Expense, Long> implem
     }
 
     @Override
-    public List<Expense> findAll() {
+    public Page<Expense> findAll(int first, int max) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Expense> cq = cb.createQuery(Expense.class);
         Root<Expense> expenseRoot = cq.from(Expense.class);
 
         cq.select(expenseRoot)
-          .orderBy(
-                  cb.desc(expenseRoot.get(Expense_.date)),
-                  cb.asc(expenseRoot.get(Expense_.concept)));
+                .orderBy(
+                        cb.desc(expenseRoot.get("date")),
+                        cb.asc(expenseRoot.get("concept")),
+                        cb.asc(expenseRoot.get("amount")));
 
-        TypedQuery<Expense> query = em.createQuery(cq);
-        return query.getResultList();
+        List<Expense> expenses = em.createQuery(cq)
+                .setFirstResult(first)
+                .setMaxResults(max)
+                .getResultList();
+        return new Page<>(expenses, count(), first, max);
     }
 
     @Override
@@ -50,7 +55,7 @@ public class ExpenseCriteriaDAOImpl extends GenericDAOImpl<Expense, Long> implem
         cq.orderBy(cb.asc(expenseRoot.get(Expense_.concept)));
 
         return em.createQuery(cq)
-                 .getResultList();
+                .getResultList();
     }
 
     @Override
@@ -63,16 +68,17 @@ public class ExpenseCriteriaDAOImpl extends GenericDAOImpl<Expense, Long> implem
                 expenseRoot.get(Expense_.concept),
                 expenseRoot.get(Expense_.amount),
                 expenseRoot.get(Expense_.date))
-          .orderBy(
-                  cb.desc(expenseRoot.get(Expense_.amount)),
-                  cb.desc(expenseRoot.get(Expense_.date)));
+                .orderBy(
+                        cb.desc(expenseRoot.get(Expense_.amount)),
+                        cb.desc(expenseRoot.get(Expense_.date)));
 
-        return em.createQuery(cq).getResultList().stream()
-                 .map(o -> new ExpenseSummaryDTO(
-                         (String) o[0],
-                         (BigDecimal) o[1],
-                         (LocalDate) o[2]))
-                 .collect(Collectors.toList());
+        return em.createQuery(cq)
+                .getResultStream()
+                .map(o -> new ExpenseSummaryDTO(
+                        (String) o[0],
+                        (BigDecimal) o[1],
+                        (LocalDate) o[2]))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -85,16 +91,17 @@ public class ExpenseCriteriaDAOImpl extends GenericDAOImpl<Expense, Long> implem
                 expenseRoot.get(Expense_.concept).alias(Expense_.CONCEPT),
                 expenseRoot.get(Expense_.amount).alias(Expense_.AMOUNT),
                 expenseRoot.get(Expense_.date).alias(Expense_.DATE))
-          .orderBy(
-                  cb.desc(expenseRoot.get(Expense_.amount)),
-                  cb.desc(expenseRoot.get(Expense_.date)));
+                .orderBy(
+                        cb.desc(expenseRoot.get(Expense_.amount)),
+                        cb.desc(expenseRoot.get(Expense_.date)));
 
-        return em.createQuery(cq).getResultList().stream()
-                 .map(t -> new ExpenseSummaryDTO(
-                         t.get(Expense_.CONCEPT, Expense_.concept.getJavaType()),
-                         t.get(Expense_.AMOUNT, Expense_.amount.getJavaType()),
-                         t.get(Expense_.DATE, Expense_.date.getJavaType())))
-                 .collect(Collectors.toList());
+        return em.createQuery(cq)
+                .getResultStream()
+                .map(t -> new ExpenseSummaryDTO(
+                        t.get(Expense_.CONCEPT, Expense_.concept.getJavaType()),
+                        t.get(Expense_.AMOUNT, Expense_.amount.getJavaType()),
+                        t.get(Expense_.DATE, Expense_.date.getJavaType())))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -107,9 +114,9 @@ public class ExpenseCriteriaDAOImpl extends GenericDAOImpl<Expense, Long> implem
                 expenseRoot.get(Expense_.concept),
                 expenseRoot.get(Expense_.amount),
                 expenseRoot.get(Expense_.date))
-          .orderBy(
-                  cb.desc(expenseRoot.get(Expense_.amount)),
-                  cb.desc(expenseRoot.get(Expense_.date)));
+                .orderBy(
+                        cb.desc(expenseRoot.get(Expense_.amount)),
+                        cb.desc(expenseRoot.get(Expense_.date)));
 
         return em.createQuery(cq).getResultList();
     }
@@ -121,9 +128,9 @@ public class ExpenseCriteriaDAOImpl extends GenericDAOImpl<Expense, Long> implem
         Root<Expense> expenseRoot = cq.from(Expense.class);
 
         cq.select(expenseRoot)
-          .where(cb.le(
-                  expenseRoot.get(Expense_.amount), new BigDecimal("50.00")))
-          .orderBy(cb.desc(expenseRoot.get(Expense_.amount)));
+                .where(cb.le(
+                        expenseRoot.get(Expense_.amount), new BigDecimal("50.00")))
+                .orderBy(cb.desc(expenseRoot.get(Expense_.amount)));
 
         return em.createQuery(cq).getResultList();
     }
@@ -135,13 +142,13 @@ public class ExpenseCriteriaDAOImpl extends GenericDAOImpl<Expense, Long> implem
         Root<Expense> expenseRoot = cq.from(Expense.class);
 
         cq.select(expenseRoot)
-          .where(cb.lessThanOrEqualTo(expenseRoot.get(Expense_.amount),
-                  cb.parameter(BigDecimal.class, "amount")))
-          .orderBy(cb.desc(expenseRoot.get(Expense_.amount)));
+                .where(cb.lessThanOrEqualTo(expenseRoot.get(Expense_.amount),
+                        cb.parameter(BigDecimal.class, "amount")))
+                .orderBy(cb.desc(expenseRoot.get(Expense_.amount)));
 
         return em.createQuery(cq)
-                 .setParameter("amount", maxAmount)
-                 .getResultList();
+                .setParameter("amount", maxAmount)
+                .getResultList();
     }
 
     @Override
@@ -187,9 +194,9 @@ public class ExpenseCriteriaDAOImpl extends GenericDAOImpl<Expense, Long> implem
 
         Root<Expense> expenseRoot = cq.from(Expense.class);
         cq.select(expenseRoot)
-          .where(cb.greaterThanOrEqualTo(
-                  expenseRoot.get(Expense_.amount).as(Double.class), sqAvg))
-          .orderBy(cb.desc(expenseRoot.get(Expense_.amount)));
+                .where(cb.greaterThanOrEqualTo(
+                        expenseRoot.get(Expense_.amount).as(Double.class), sqAvg))
+                .orderBy(cb.desc(expenseRoot.get(Expense_.amount)));
 
         return em.createQuery(cq).getResultList();
     }
@@ -201,12 +208,12 @@ public class ExpenseCriteriaDAOImpl extends GenericDAOImpl<Expense, Long> implem
         Root<Expense> expenseRoot = cq.from(Expense.class);
 
         cq.select(expenseRoot)
-          .where(
-                  expenseRoot.get(Expense_.category).get(Category_.id)
-                             .in(ids))
-          .orderBy(
-                  cb.desc(expenseRoot.get(Expense_.date)),
-                  cb.asc(expenseRoot.get(Expense_.concept)));
+                .where(
+                        expenseRoot.get(Expense_.category).get(Category_.id)
+                                .in(ids))
+                .orderBy(
+                        cb.desc(expenseRoot.get(Expense_.date)),
+                        cb.asc(expenseRoot.get(Expense_.concept)));
 
         return em.createQuery(cq).getResultList();
     }
@@ -220,13 +227,13 @@ public class ExpenseCriteriaDAOImpl extends GenericDAOImpl<Expense, Long> implem
         Root<Category> categoryRoot = cq.from(Category.class);
 
         cq.select(expenseRoot)
-          .where(
-                  cb.equal(categoryRoot.get(Category_.id), expenseRoot.get(Expense_.category).get(Category_.id)),
-                  cb.equal(categoryRoot.get(Category_.id), id)
-          )
-          .orderBy(
-                  cb.desc(expenseRoot.get(Expense_.date)),
-                  cb.asc(expenseRoot.get(Expense_.concept)));
+                .where(
+                        cb.equal(categoryRoot.get(Category_.id), expenseRoot.get(Expense_.category).get(Category_.id)),
+                        cb.equal(categoryRoot.get(Category_.id), id)
+                )
+                .orderBy(
+                        cb.desc(expenseRoot.get(Expense_.date)),
+                        cb.asc(expenseRoot.get(Expense_.concept)));
 
         return em.createQuery(cq).getResultList();
     }
@@ -242,9 +249,9 @@ public class ExpenseCriteriaDAOImpl extends GenericDAOImpl<Expense, Long> implem
                 expenseRoot.get(Expense_.amount),
                 expenseRoot.get(Expense_.date),
                 cb.function("WEEKOFYEAR", Integer.class, expenseRoot.get(Expense_.date)))
-          .orderBy(
-                  cb.desc(expenseRoot.get(Expense_.date)),
-                  cb.asc(expenseRoot.get(Expense_.amount)));
+                .orderBy(
+                        cb.desc(expenseRoot.get(Expense_.date)),
+                        cb.asc(expenseRoot.get(Expense_.amount)));
 
         return em.createQuery(cq).getResultList();
     }
@@ -263,14 +270,14 @@ public class ExpenseCriteriaDAOImpl extends GenericDAOImpl<Expense, Long> implem
                 expenseRoot.get(Expense_.date),
                 expenseRoot.get(Expense_.comments),
                 cb.selectCase()
-                  .when(cb.ge(expenseRoot.get(Expense_.amount), 50),
-                          ExpenseDTO.ExpenseType.EXPENSIVE.name())
-                  .when(cb.ge(expenseRoot.get(Expense_.amount), 20),
-                          ExpenseDTO.ExpenseType.STANDARD.name())
-                  .otherwise(ExpenseDTO.ExpenseType.SMALL.name()))
-          .orderBy(
-                  cb.desc(expenseRoot.get(Expense_.date)),
-                  cb.asc(expenseRoot.get(Expense_.concept)));
+                        .when(cb.ge(expenseRoot.get(Expense_.amount), 50),
+                                ExpenseDTO.ExpenseType.EXPENSIVE.name())
+                        .when(cb.ge(expenseRoot.get(Expense_.amount), 20),
+                                ExpenseDTO.ExpenseType.STANDARD.name())
+                        .otherwise(ExpenseDTO.ExpenseType.SMALL.name()))
+                .orderBy(
+                        cb.desc(expenseRoot.get(Expense_.date)),
+                        cb.asc(expenseRoot.get(Expense_.concept)));
 
         return em.createQuery(cq).getResultList();
     }
