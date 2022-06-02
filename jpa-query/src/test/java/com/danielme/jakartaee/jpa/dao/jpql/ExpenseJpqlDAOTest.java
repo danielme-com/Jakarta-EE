@@ -160,9 +160,12 @@ class ExpenseJpqlDAOTest extends BaseDaoTest {
         Optional<Integer> week = expenseJpqlDAO.weekOfYearExpense(Datasets.EXPENSE_ID_1);
 
         assertThat(week)
-                .isNotEmpty();
-        assertThat(week.get())
-                .isEqualTo(22);
+                .contains(22);
+    }
+
+    @Test
+    void testExpenseNotExists() {
+       assertThat(expenseJpqlDAO.existsById(45L)).isFalse();
     }
 
 }

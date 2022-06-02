@@ -35,4 +35,6 @@ public interface ExpenseJpqlDAO extends GenericDAO<Expense, Long> {
 
     Optional<Integer> weekOfYearExpense(Long expenseId);
 
+    boolean existsById(Long expenseId);
+
 }

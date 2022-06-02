@@ -131,6 +131,18 @@ public class ExpenseJpqlDAOImpl extends GenericDAOImpl<Expense, Long> implements
     }
 
     @Override
+    public boolean existsById(Long expenseId) {
+        return em.createQuery("SELECT " +
+                "   CASE " +
+                "      WHEN (COUNT(e) > 0)  THEN true " +
+                "      ELSE false " +
+                "END FROM Expense e " +
+                "WHERE e.id = :expenseId", Boolean.class)
+                .setParameter("expenseId", expenseId)
+                .getSingleResult();
+    }
+
+    @Override
     public Page<Expense> findAll(int first, int max) {
         List<Expense> expenses = em.createQuery("SELECT e FROM Expense e " +
                 "ORDER BY e.date DESC, e.concept, e.amount", Expense.class)
