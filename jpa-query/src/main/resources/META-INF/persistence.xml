@@ -17,6 +17,8 @@
 
             <property name="hibernate.metadata_builder_contributor"
                       value="com.danielme.jakartaee.jpa.hibernate.CustomFunctionsMySQLMetadataBuilderContributor"/>
+            <!-- enables null values for procedure parameters-->
+            <!--<property name="hibernate.proc.param_null_passing" value="true"/>-->
         </properties>
     </persistence-unit>
 

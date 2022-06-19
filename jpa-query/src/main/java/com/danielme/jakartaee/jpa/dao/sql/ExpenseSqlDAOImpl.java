@@ -127,8 +127,13 @@ public class ExpenseSqlDAOImpl extends GenericDAOImpl<Expense, Long> implements 
     public long countExpensesWithProcedure(String concept) {
         StoredProcedureQuery sp = em.createStoredProcedureQuery("sp_count_expenses")
                 .registerStoredProcedureParameter("concept", String.class, ParameterMode.IN)
-                .registerStoredProcedureParameter("total", Long.class, ParameterMode.OUT)
-                .setParameter("concept", concept);
+                .registerStoredProcedureParameter("total", Long.class, ParameterMode.OUT);
+
+        //enables null values for parameters
+        //((org.hibernate.procedure.ParameterRegistration) sp.getParameter("concept")).enablePassingNulls(true);
+
+        sp.setParameter("concept", concept);
+
         sp.execute();
         return (Long) sp.getOutputParameterValue("total");
     }
