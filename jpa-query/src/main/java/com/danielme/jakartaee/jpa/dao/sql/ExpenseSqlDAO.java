@@ -20,6 +20,8 @@ public interface ExpenseSqlDAO extends GenericDAO<Expense, Long> {
 
     List<Expense> findByText(String text);
 
+    List<ExpenseSummaryDTO> getSummaryNamedQuery();
+
     List<ExpenseSummaryDTO> getSummaryRaw();
 
     List<ExpenseSummaryDTO> getSummaryTuple();

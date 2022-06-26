@@ -48,6 +48,13 @@ public class ExpenseSqlDAOTest extends BaseDaoTest {
     }
 
     @Test
+    void testGetSummaryNamedQuery() {
+        List<ExpenseSummaryDTO> summaries = expenseSqlDAO.getSummaryNamedQuery();
+
+        ExpenseSummaryAssert.assertSummary(summaries);
+    }
+
+    @Test
     void testGetSummaryTuple() {
         List<ExpenseSummaryDTO> summaries = expenseSqlDAO.getSummaryTuple();
 

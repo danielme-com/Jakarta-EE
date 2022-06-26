@@ -31,9 +31,9 @@ public class ExpenseSqlDAOImpl extends GenericDAOImpl<Expense, Long> implements 
 
     @Override
     public List<Expense> findAllNativePagination(int first, int max) {
-        return em.createNativeQuery("SELECT * FROM expenses ORDER BY concept LIMIT ?, ?", Expense.class)
-                .setParameter(1, first)
-                .setParameter(2, max)
+        return em.createNativeQuery("SELECT * FROM expenses ORDER BY concept LIMIT :first, :max", Expense.class)
+                .setParameter("first", first)
+                .setParameter("max", max)
                 .getResultList();
     }
 
@@ -57,8 +57,14 @@ public class ExpenseSqlDAOImpl extends GenericDAOImpl<Expense, Long> implements 
 
     @Override
     public List<Expense> findByText(String text) {
-        return em.createNamedQuery("Expense.findByText")
+        return em.createNamedQuery("Expense.findByText", Expense.class)
                 .setParameter("text", text == null ? "%" : "%" + text + "%")
+                .getResultList();
+    }
+
+    @Override
+    public List<ExpenseSummaryDTO> getSummaryNamedQuery() {
+        return em.createNamedQuery("Expense.Summary", ExpenseSummaryDTO.class)
                 .getResultList();
     }
 
@@ -111,11 +117,11 @@ public class ExpenseSqlDAOImpl extends GenericDAOImpl<Expense, Long> implements 
 
     @Override
     public List<ExpenseSummaryDTO> getSummaryConstructorResultTransformer() {
-        Constructor<?> constructor;
+        Constructor<ExpenseSummaryDTO> constructor;
         try {
             constructor = ExpenseSummaryDTO.class.getConstructor(String.class, BigDecimal.class, java.sql.Date.class);
         } catch (NoSuchMethodException e) {
-            throw new RuntimeException("constructor for " + ExpenseSummaryDTO.class + "not found !!!");
+            throw new RuntimeException("constructor for " + ExpenseSummaryDTO.class + " not found !!!");
         }
         return em.createNativeQuery("SELECT concept, amount, date FROM expenses ORDER BY amount desc, date desc")
                 .unwrap(org.hibernate.query.Query.class)
