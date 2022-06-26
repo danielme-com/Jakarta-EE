@@ -68,11 +68,11 @@ public class CategoryJpqlDAOImpl extends GenericDAOImpl<Category, Long> implemen
 
     @Override
     public List<CategorySummaryDTO> getSummaryConstructorResultTransformer() {
-        Constructor<?> constructor;
+        Constructor<CategorySummaryDTO> constructor;
         try {
             constructor = CategorySummaryDTO.class.getConstructor(Long.class, String.class, BigDecimal.class, Long.class);
         } catch (NoSuchMethodException e) {
-            throw new RuntimeException("constructor for " + CategorySummaryDTO.class + "not found !!!");
+            throw new RuntimeException("constructor for " + CategorySummaryDTO.class + " not found !!!");
         }
         return em.unwrap(Session.class)
                 .createNamedQuery("Category.summary")
