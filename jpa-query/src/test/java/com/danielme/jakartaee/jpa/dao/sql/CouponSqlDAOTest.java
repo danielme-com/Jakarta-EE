@@ -3,7 +3,6 @@ package com.danielme.jakartaee.jpa.dao.sql;
 import com.danielme.jakartaee.jpa.Datasets;
 import com.danielme.jakartaee.jpa.dao.BaseDaoTest;
 import com.danielme.jakartaee.jpa.entities.Coupon;
-import com.danielme.jakartaee.jpa.entities.Coupon_;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +21,7 @@ public class CouponSqlDAOTest extends BaseDaoTest {
         List<Coupon> coupons = couponSqlDAO.findAll();
 
         assertThat(coupons)
-                .extracting(Coupon_.ID)
+                .extracting(Coupon::getId)
                 .containsExactly(Datasets.COUPON_ID_ACME, Datasets.COUPON_ID_SUPER);
     }
 
@@ -32,7 +31,7 @@ public class CouponSqlDAOTest extends BaseDaoTest {
         em.clear(); //detach entities, so lazy loading fails
 
         assertThat(coupons)
-                .extracting(Coupon_.ID)
+                .extracting(Coupon::getId)
                 .containsExactly(Datasets.COUPON_ID_SUPER);
         assertThat(coupons.get(0).getExpense().getConcept()).isEqualTo("Lunch menu");
     }

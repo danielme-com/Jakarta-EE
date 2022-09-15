@@ -55,7 +55,7 @@ class CategoryJpqlDAOTest extends BaseDaoTest {
         List<Category> categories = categoryJpqlDAO.findByName("Fuel");
 
         assertThat(categories)
-                .extracting("id")
+                .extracting(Category::getId)
                 .containsExactly(Datasets.CATEGORY_ID_FUEL);
     }
 
@@ -70,7 +70,7 @@ class CategoryJpqlDAOTest extends BaseDaoTest {
         List<Category> categories = categoryJpqlDAO.findAll();
 
         assertThat(categories)
-                .extracting("id")
+                .extracting(Category::getId)
                 .containsExactly(Datasets.CATEGORY_ID_ENTERTAINMENT,
                         Datasets.CATEGORY_ID_FOOD,
                         Datasets.CATEGORY_ID_FUEL,
@@ -106,7 +106,7 @@ class CategoryJpqlDAOTest extends BaseDaoTest {
 
     private void assertSummaries(List<CategorySummaryDTO> summaries) {
         assertThat(summaries)
-                .extracting("id", "expenses")
+                .extracting(CategorySummaryDTO::getId, CategorySummaryDTO::getExpenses)
                 .containsExactly(tuple(Datasets.CATEGORY_ID_ENTERTAINMENT, 3L),
                         tuple(Datasets.CATEGORY_ID_FOOD, 2L),
                         tuple(Datasets.CATEGORY_ID_FUEL, 1L),

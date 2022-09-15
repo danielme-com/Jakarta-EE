@@ -48,7 +48,7 @@ class ExpenseJpqlDAOTest extends BaseDaoTest {
         List<Expense> expenses = expenseJpqlDAO.findByText("menu");
 
         assertThat(expenses)
-                .extracting("id")
+                .extracting(Expense::getId)
                 .containsExactly(Datasets.EXPENSE_ID_1);
     }
 
@@ -66,7 +66,7 @@ class ExpenseJpqlDAOTest extends BaseDaoTest {
                 List.of(Datasets.CATEGORY_ID_FOOD, Datasets.CATEGORY_ID_FUEL));
 
         assertThat(expenses)
-                .extracting("id")
+                .extracting(Expense::getId)
                 .containsExactly(Datasets.EXPENSE_ID_6, Datasets.EXPENSE_ID_1, Datasets.EXPENSE_ID_2);
     }
 
@@ -83,8 +83,9 @@ class ExpenseJpqlDAOTest extends BaseDaoTest {
         LocalDate to = LocalDate.of(2021, 7, 20);
         List<Expense> expenses = expenseJpqlDAO.findByDateRange(null, to);
 
-        assertThat(expenses).extracting("id").containsExactly(Datasets.EXPENSE_ID_2,
-                Datasets.EXPENSE_ID_1);
+        assertThat(expenses)
+                .extracting(Expense::getId)
+                .containsExactly(Datasets.EXPENSE_ID_2, Datasets.EXPENSE_ID_1);
     }
 
     @Test
@@ -92,8 +93,10 @@ class ExpenseJpqlDAOTest extends BaseDaoTest {
         LocalDate from = LocalDate.of(2021, 8, 1);
         List<Expense> expenses = expenseJpqlDAO.findByDateRange(from, null);
 
-        assertThat(expenses).extracting("id").containsExactly(Datasets.EXPENSE_ID_6,
-                Datasets.EXPENSE_ID_5, Datasets.EXPENSE_ID_3, Datasets.EXPENSE_ID_4);
+        assertThat(expenses)
+                .extracting(Expense::getId)
+                .containsExactly(Datasets.EXPENSE_ID_6, Datasets.EXPENSE_ID_5, Datasets.EXPENSE_ID_3,
+                        Datasets.EXPENSE_ID_4);
     }
 
     @Test
@@ -103,7 +106,7 @@ class ExpenseJpqlDAOTest extends BaseDaoTest {
         List<Expense> expenses = expenseJpqlDAO.findByDateRange(from, to);
 
         assertThat(expenses)
-                .extracting("id")
+                .extracting(Expense::getId)
                 .containsExactly(Datasets.EXPENSE_ID_2, Datasets.EXPENSE_ID_1);
     }
 
@@ -115,7 +118,7 @@ class ExpenseJpqlDAOTest extends BaseDaoTest {
         Page<Expense> page2 = expenseJpqlDAO.findAll(4, pageSize);
 
         assertThat(page1.getResults())
-                .extracting("id")
+                .extracting(Expense::getId)
                 .containsExactly(Datasets.EXPENSE_ID_6, Datasets.EXPENSE_ID_5,
                         Datasets.EXPENSE_ID_3, Datasets.EXPENSE_ID_4);
         assertThat(page1.getNumPages())
@@ -128,7 +131,7 @@ class ExpenseJpqlDAOTest extends BaseDaoTest {
                 .isTrue();
 
         assertThat(page2.getResults())
-                .extracting("id")
+                .extracting(Expense::getId)
                 .containsExactly(Datasets.EXPENSE_ID_2, Datasets.EXPENSE_ID_1);
         assertThat(page2.getNumber())
                 .isEqualTo(2);

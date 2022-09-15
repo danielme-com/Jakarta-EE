@@ -4,7 +4,6 @@ import com.danielme.jakartaee.jpa.Datasets;
 import com.danielme.jakartaee.jpa.dao.BaseDaoTest;
 import com.danielme.jakartaee.jpa.dto.CouponSummaryDTO;
 import com.danielme.jakartaee.jpa.entities.Coupon;
-import com.danielme.jakartaee.jpa.entities.Coupon_;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +21,7 @@ class CouponCriteriaDAOTest extends BaseDaoTest {
         List<CouponSummaryDTO> summaries = couponCriteriaDAO.getSummary();
 
         assertThat(summaries)
-                .extracting("id")
+                .extracting(CouponSummaryDTO::getId)
                 .containsExactly(Datasets.COUPON_ID_ACME,
                         Datasets.COUPON_ID_SUPER);
     }
@@ -32,7 +31,7 @@ class CouponCriteriaDAOTest extends BaseDaoTest {
         List<Coupon> coupons = couponCriteriaDAO.findAllWithExpense();
 
         assertThat(coupons)
-                .extracting(Coupon_.ID)
+                .extracting(Coupon::getId)
                 .containsExactly(Datasets.COUPON_ID_ACME,
                         Datasets.COUPON_ID_SUPER);
     }

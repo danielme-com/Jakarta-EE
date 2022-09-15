@@ -94,7 +94,7 @@ public class ExpenseSqlDAOTest extends BaseDaoTest {
         List<Expense> expenses = expenseSqlDAO.findByText("menu");
 
         assertThat(expenses)
-                .extracting("id")
+                .extracting(Expense::getId)
                 .containsExactly(Datasets.EXPENSE_ID_1);
     }
 
@@ -105,7 +105,7 @@ public class ExpenseSqlDAOTest extends BaseDaoTest {
         List<Expense> expenses = expenseSqlDAO.findByDateRange(from, to);
 
         assertThat(expenses)
-                .extracting("id")
+                .extracting(Expense::getId)
                 .containsExactly(Datasets.EXPENSE_ID_2, Datasets.EXPENSE_ID_1);
     }
 
@@ -128,7 +128,7 @@ public class ExpenseSqlDAOTest extends BaseDaoTest {
         List<Expense> expenses = expenseSqlDAO.findCheapExpensesWithProcedure(new BigDecimal("5.0"));
 
         assertThat(expenses)
-                .extracting("id")
+                .extracting(Expense::getId)
                 .containsExactly(Datasets.EXPENSE_ID_5, Datasets.EXPENSE_ID_2);
     }
 
@@ -137,13 +137,13 @@ public class ExpenseSqlDAOTest extends BaseDaoTest {
         List<Expense> expenses = expenseSqlDAO.findCheapExpensesWithNamedProcedure(new BigDecimal("5.0"));
 
         assertThat(expenses)
-                .extracting("id")
+                .extracting(Expense::getId)
                 .containsExactly(Datasets.EXPENSE_ID_5, Datasets.EXPENSE_ID_2);
     }
 
     private void assertPage(List<Expense> expenses) {
         assertThat(expenses)
-                .extracting("id")
+                .extracting(Expense::getId)
                 .containsExactly(Datasets.EXPENSE_ID_6, Datasets.EXPENSE_ID_5);
     }
 

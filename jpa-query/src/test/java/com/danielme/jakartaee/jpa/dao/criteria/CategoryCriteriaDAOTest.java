@@ -4,7 +4,6 @@ import com.danielme.jakartaee.jpa.Datasets;
 import com.danielme.jakartaee.jpa.dao.BaseDaoTest;
 import com.danielme.jakartaee.jpa.dto.CategorySummaryDTO;
 import com.danielme.jakartaee.jpa.entities.Category;
-import com.danielme.jakartaee.jpa.entities.Category_;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
 
@@ -24,7 +23,7 @@ class CategoryCriteriaDAOTest extends BaseDaoTest {
         List<Category> categories = categoryCriteriaDAO.findCategoriesByMinExpenseAmount(new BigDecimal("100.00"));
 
         assertThat(categories)
-                .extracting(Category_.ID)
+                .extracting(Category::getId)
                 .containsExactly(Datasets.CATEGORY_ID_ENTERTAINMENT, Datasets.CATEGORY_ID_FOOD);
     }
 
@@ -32,7 +31,7 @@ class CategoryCriteriaDAOTest extends BaseDaoTest {
     void testFindAllCategoriesByBudgetMinAmount() {
         List<Category> categories = categoryCriteriaDAO.findAllCategoriesByBudgetMinAmount(new BigDecimal("300.00"));
         assertThat(categories)
-                .extracting(Category_.ID)
+                .extracting(Category::getId)
                 .containsExactly(Datasets.CATEGORY_ID_FOOD,
                         Datasets.CATEGORY_ID_FUEL);
     }
@@ -42,7 +41,7 @@ class CategoryCriteriaDAOTest extends BaseDaoTest {
         List<CategorySummaryDTO> summaries = categoryCriteriaDAO.getSummaryAverageAbove(new BigDecimal("50.00"));
 
         assertThat(summaries)
-                .extracting("id", "expenses")
+                .extracting(CategorySummaryDTO::getId, CategorySummaryDTO::getExpenses)
                 .containsExactly(tuple(Datasets.CATEGORY_ID_FOOD, 2L),
                         tuple(Datasets.CATEGORY_ID_FUEL, 1L));
     }

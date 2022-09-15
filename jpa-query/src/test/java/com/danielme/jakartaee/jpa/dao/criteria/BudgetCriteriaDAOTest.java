@@ -3,7 +3,6 @@ package com.danielme.jakartaee.jpa.dao.criteria;
 import com.danielme.jakartaee.jpa.Datasets;
 import com.danielme.jakartaee.jpa.dao.BaseDaoTest;
 import com.danielme.jakartaee.jpa.entities.Budget;
-import com.danielme.jakartaee.jpa.entities.Budget_;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
 
@@ -26,7 +25,7 @@ class BudgetCriteriaDAOTest extends BaseDaoTest {
                 .findAvailableByDateAndAmount(new BigDecimal("200.00"), minDate, maxDate);
 
         assertThat(budgets)
-                .extracting(Budget_.ID)
+                .extracting(Budget::getId)
                 .containsExactly(Datasets.BUDGET_AUGUST,
                         Datasets.BUDGET_VIDEOGAMES_2021);
     }

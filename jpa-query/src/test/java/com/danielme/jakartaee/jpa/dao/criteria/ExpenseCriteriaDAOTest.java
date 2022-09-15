@@ -7,7 +7,6 @@ import com.danielme.jakartaee.jpa.dto.ExpenseDTO;
 import com.danielme.jakartaee.jpa.dto.ExpenseSummaryDTO;
 import com.danielme.jakartaee.jpa.dto.ExpenseWeekDTO;
 import com.danielme.jakartaee.jpa.entities.Expense;
-import com.danielme.jakartaee.jpa.entities.Expense_;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
 
@@ -27,7 +26,7 @@ class ExpenseCriteriaDAOTest extends BaseDaoTest {
         List<Expense> expenses = expenseCriteriaDAO.findAll(0, 6).getResults();
 
         assertThat(expenses)
-                .extracting(Expense_.ID)
+                .extracting(Expense::getId)
                 .containsExactly(Datasets.EXPENSE_ID_6, Datasets.EXPENSE_ID_5,
                         Datasets.EXPENSE_ID_3, Datasets.EXPENSE_ID_4,
                         Datasets.EXPENSE_ID_2, Datasets.EXPENSE_ID_1);
@@ -48,7 +47,7 @@ class ExpenseCriteriaDAOTest extends BaseDaoTest {
         List<Expense> expenses = expenseCriteriaDAO.findByCategory(Datasets.CATEGORY_ID_FUEL);
 
         assertThat(expenses)
-                .extracting(Expense_.ID)
+                .extracting(Expense::getId)
                 .containsExactly(Datasets.EXPENSE_ID_6);
     }
 
@@ -93,7 +92,7 @@ class ExpenseCriteriaDAOTest extends BaseDaoTest {
         List<Expense> expenses = expenseCriteriaDAO.findByDateRange(from, null);
 
         assertThat(expenses)
-                .extracting(Expense_.ID)
+                .extracting(Expense::getId)
                 .containsExactly(Datasets.EXPENSE_ID_6, Datasets.EXPENSE_ID_5);
     }
 
@@ -103,7 +102,7 @@ class ExpenseCriteriaDAOTest extends BaseDaoTest {
         List<Expense> expenses = expenseCriteriaDAO.findAboveAverage();
 
         assertThat(expenses)
-                .extracting(Expense_.ID)
+                .extracting(Expense::getId)
                 .containsExactly(Datasets.EXPENSE_ID_1,
                         Datasets.EXPENSE_ID_3, Datasets.EXPENSE_ID_6);
     }
@@ -113,7 +112,7 @@ class ExpenseCriteriaDAOTest extends BaseDaoTest {
         List<Expense> expenses = expenseCriteriaDAO.findByCategories(List.of(Datasets.COUPON_ID_ACME));
 
         assertThat(expenses)
-                .extracting(Expense_.ID)
+                .extracting(Expense::getId)
                 .containsExactly(Datasets.EXPENSE_ID_2, Datasets.EXPENSE_ID_1);
     }
 
@@ -122,7 +121,7 @@ class ExpenseCriteriaDAOTest extends BaseDaoTest {
         List<ExpenseDTO> expenseDTOS = expenseCriteriaDAO.findAllWithType();
 
         assertThat(expenseDTOS)
-                .extracting("type")
+                .extracting(ExpenseDTO::getType)
                 .containsExactly(
                         ExpenseDTO.ExpenseType.EXPENSIVE,
                         ExpenseDTO.ExpenseType.SMALL,
@@ -137,13 +136,13 @@ class ExpenseCriteriaDAOTest extends BaseDaoTest {
         List<ExpenseWeekDTO> summaries = expenseCriteriaDAO.getSummaryWithWeek();
 
         assertThat(summaries)
-                .extracting("week")
+                .extracting(ExpenseWeekDTO::getWeek)
                 .containsExactly(41, 40, 30, 30, 29, 22);
     }
 
     private void assertExpensesByMax(List<Expense> expenses) {
         assertThat(expenses)
-                .extracting(Expense_.ID)
+                .extracting(Expense::getId)
                 .containsExactly(Datasets.EXPENSE_ID_4, Datasets.EXPENSE_ID_5,
                         Datasets.EXPENSE_ID_2);
     }

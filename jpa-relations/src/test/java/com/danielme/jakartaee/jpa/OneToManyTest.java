@@ -52,7 +52,7 @@ public class OneToManyTest extends BaseRelationsTest {
                                    .getResultList();
 
         assertThat(expenses)
-                .extracting("id")
+                .extracting(Expense::getId)
                 .containsExactly(Datasets.EXPENSE_ID_2, Datasets.EXPENSE_ID_1);
     }
 

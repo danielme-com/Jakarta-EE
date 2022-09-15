@@ -32,7 +32,7 @@ class BudgetJpqlDAOTest extends BaseDaoTest {
         assertThat(page.getNumPages())
                 .isEqualTo(2);
         assertThat(page.getResults())
-                .extracting("id")
+                .extracting(Budget::getId)
                 .containsExactly(Datasets.BUDGET_AUGUST, Datasets.BUDGET_JULY);
         assertThat(page.getResults().get(0).getCategories())
                 .hasSize(2);

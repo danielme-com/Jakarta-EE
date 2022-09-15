@@ -13,7 +13,7 @@ public final class ExpenseSummaryAssert {
 
     public static void assertSummary(List<ExpenseSummaryDTO> summaries) {
         assertThat(summaries)
-                .extracting("concept")
+                .extracting(ExpenseSummaryDTO::getConcept)
                 .containsExactly("Lunch menu", "movies", "Full tank",
                         "Netflix", "HBO", "vegetables");
     }
